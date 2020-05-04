@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html ng-app="demo-kogito-knative">
+
+<head>
+  <meta charset="utf-8">
+  <title>Frequent Flyer Discount</title>
+
+  <link rel="stylesheet" href="js/patternfly.min.css">
+  <link rel="stylesheet" href="js/patternfly-additions.min.css">
+
+
+
+  <script src="js/patternfly-settings.js"></script>
+  <script src="js/patternfly-settings-colors.js"></script>
+  <script src="js/patternfly-settings-charts.js"></script>
+  <script src="js/angular.js"></script>
+
+  <script src="js/angular-sanitize.js"></script>
+  <script src="js/angular-animate.js"></script>
+  <script src="js/ui-bootstrap-tpls.js"></script>
+
+  <script src="js/lodash.min.js"></script>
+  <script src="js/angular-patternfly.js"></script>
+  <script src="js/angular-ui-router.min.js"></script>
+  <script src="js/angular-drag-and-drop-lists.js"></script>
+
+  <script src="config/config.js"></script>
+  <script src="kogitoClient.js"></script>
+
+
+</head>
+
+<body class="cards-pf">
+  <!-- PatternFly Horizontal Nav -->
+  <nav class="navbar navbar-default navbar-pf" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <img src="img/b.png" alt="Kogito Loan Bank" />
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-utility">
+        <li>
+          <a href="#">Utilisateur</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="pficon pficon-user"></span>
+            Mourad Ouachani <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">Link</a>
+            </li>
+            <li>
+              <a href="#">Another link</a>
+            </li>
+            <li>
+              <a href="#">Something else here</a>
+            </li>
+            <li class="divider"></li>
+            <li class="dropdown-submenu">
+              <a tabindex="-1" href="#">More options</a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="#">Link</a>
+                </li>
+                <li>
+                  <a href="#">Another link</a>
+                </li>
+                <li>
+                  <a href="#">Something else here</a>
+                </li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li>
+                  <a href="#">Separated link</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#">One more separated link</a>
+                </li>
+              </ul>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="#">One more separated link</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-primary">
+        <li>
+          <a href="#">Acceuil</a>
+        </li>
+        <li class="active">
+          <a href="#">Simulation Crédit</a>
+        </li>
+        <li>
+          <!-- <a href="#">Decision Service Regression Testing</a> -->
+        </li>
+        <li>
+          <!-- <a href="#">Decision Service Impact Testing</a> -->
+        </li>
+      </ul>
+    </div>
+  </nav>
+ 
+    <div ng-controller="call-dmn" class="container-fluid container-cards-pf">
+       <div class="col-xs-12 col-md-8">
+      <div class=" card-pf card-pf-utilization">
+        <div class="card-pf-heading">
+          <p class="card-pf-heading-details"></p>
+          <h2 class="right-aligned_all-fields-required">
+            Traveler Informations
+          </h2>
+        </div>
+        <div class="card-pf-body">
+          <form class="form-horizontal" role="form">
+            <table class="table" style="margin-bottom: 10px">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <div class="form-group">
+                      <label for="inputstatus" class="col-sm-2 control-label">Status</label>
+                      <div class="col-sm-4">
+                        <input type="text" ng-model="traveler.status" class="form-control" id="status" placeholder="Explorer">
+                      </div>
+                    </div>
+                  </th>
+                  <h3 id="right-aligned_all-fields-required">Travel</h3>
+                  <th scope="col">
+                    <div class="form-group">
+                      <label for="inputfrom" class="col-sm-2 control-label">From</label>
+                      <div class="col-sm-4">
+                        <input type="text" ng-model="traveler.from" class="form-control" id="ga" placeholder="Paris">
+                      </div>
+                    </div>
+                  </th>
+                  <th scope="col">
+                    <div class="form-group">
+                      <label for="inputTo" class="col-sm-2 control-label">To</label>
+                      <div class="col-sm-4">
+                        <input type="text" ng-model="traveler.to" class="form-control" id="to" placeholder="New York">
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              
+            </table>
+
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" ng-click="startDMN()" class="btn btn-default">Calculate</button>
+              </div>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div><!-- /col -->
+    <div class="col-xs-12 col-md-4">
+      <div class="card-pf">
+        <div class="card-pf-heading">
+          <h2 class="card-pf-title">
+            Results
+          </h2>
+        </div>
+        <div>
+          <div>
+            <h5 class="card-title"><strong>Version</strong></h5>
+            <p class="card-text" style="padding-left: 30px">{{msgContainer}}</p>
+          </div>
+          <div>
+            <h5 class="card-title"><strong>Discount</strong></h5>
+            <p class="card-text" style="padding-left: 30px">{{discount}}</p>
+          </div>
+
+          <div>
+            <h5 class="card-title" style="padding-bottom: 10px;"><strong>{{msgTime}}</strong>
+            </h5>
+          </div>
+        </div>
+      </div><!-- /row -->
+    </div><!-- /container -->
+  </div>
+  </div>
+
+</body>
+
+</html>
